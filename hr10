@@ -1,0 +1,60 @@
+import java.util.*;
+class SongNode
+{
+    String Songname;
+    SongNode next;
+    SongNode(String Songname)
+    {
+        this.Songname=Songname;
+        this.next=null;
+    }
+}
+public class Solution
+{
+    public static SongNode reverse(SongNode head)
+    {
+        SongNode current=head;
+        SongNode prev=null;
+        SongNode next=null;
+        while(current!=null)
+        {
+            next=current.next;
+            current.next=prev;
+            prev=current;
+            current=next;
+        }
+        return prev;
+    }
+    public static void main(String[]args)
+    {
+        Scanner sc=new Scanner(System.in);
+        Solution sol=new Solution();
+        int no=Integer.parseInt(sc.nextLine());
+        SongNode head=null,tail=null;
+        for (int i=0;i<no;i++)
+        {
+            String Songname=sc.next();
+            SongNode newNode=new SongNode(Songname);
+
+            if(head==null)
+            {
+                head=newNode;
+                tail=newNode;
+            }
+            else
+            {
+                tail.next=newNode;
+                tail=newNode;
+            }
+                
+        }
+         head=reverse(head);
+        SongNode temp=head;
+       
+        while(temp!=null)
+        {
+            System.out.print(temp.Songname+" ");
+            temp=temp.next;
+        }
+    }
+}
