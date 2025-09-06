@@ -1,0 +1,80 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int pro_id;
+    Node next;
+    Node(int pro_id)
+    {
+        this.pro_id=pro_id;
+        this.next=null;
+    }
+}
+
+public class Solution 
+{
+   Node head;
+   public  void insertAtEnd(int pro_id)
+   {
+       Node newNode=new Node(pro_id);
+       if(head==null)
+       {
+           head=newNode;
+           return;
+       }
+       Node temp=head;
+       while(temp.next!=null)
+       {
+           temp=temp.next;
+       }
+       temp.next=newNode;
+       
+   }
+    public  void intersection(Node head1,Node head2)//101 102 103 104 105  //102 104 106 108
+    {
+        Node a=head1,b=head2 // a=101 b=102
+        boolean intersect=false;//intersect=false//intersect true
+        while(a!=null&&b!=null)//at a=105 loop will be terminated
+        {
+            if(a.pro_id==b.pro_id)//101!=102//102==102//103!=104//104==104//105!=106
+            {
+                System.out.print(a.pro_id+" ");//102 is printed//104 is printed
+                intersect=true;//intersect=true//intersect=true
+                a=a.next;//a=103 b=104//a=104 b=106
+                b=b.next;
+            }
+            else if(a.pro_id<b.pro_id)//101<102//103<104//104<106//105<106
+            {
+                a=a.next;//a=101.next=102//103.next=104//104.next=105//null
+            }
+            else if(b.pro_id<a.pro_id)
+            {
+                b=b.next;
+            }
+        }
+        if(!intersect)
+        {
+            System.out.println("No Intersection");
+        }
+        
+    }
+    public static void main(String[] args) 
+    {
+       Scanner sc=new Scanner(System.in);
+       Solution sol1=new Solution();
+        int no1=sc.nextInt();//5
+        for(int i=0;i<no1;i++)
+        {
+            int pro_id=sc.nextInt();
+            sol1.insertAtEnd(pro_id);//101 102 103 104 105
+        }
+        Solution sol2=new Solution();
+        int no2=sc.nextInt();//4
+        for(int i=0;i<no2;i++)
+        {
+            int pro_id1=sc.nextInt();
+            sol2.insertAtEnd(pro_id1);//102 104 106 108
+        }
+        sol1.intersection(sol1.head,sol2.head);//both the list will be passed and intersection method will be called
+    }
+}
