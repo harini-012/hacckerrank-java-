@@ -1,0 +1,66 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int task_id;
+    Node next;
+    Node(int task_id)
+    {
+        this.task_id=task_id;
+        this.next=null;
+        
+    }
+}
+public class Solution 
+{
+    public static Node swapPairs(Node head)
+    {
+        Node temp=new Node(0);
+        temp.next=head;
+        Node prev=temp;
+        while(prev.next!=null && prev.next.next!=null)
+        {
+            Node first=prev.next;
+            Node second=prev.next.next;
+            prev.next=second;
+            first.next=second.next;
+            second.next=first;
+            prev=first;
+        }
+        return temp.next;
+    }
+     public static void print(Node head)
+     {
+        Node temp=head;
+        while(temp!=null)
+        {
+            System.out.print(temp.task_id+" ");
+            temp=temp.next;
+        }
+     }
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int no=sc.nextInt();
+        Node head=null,tail=null;
+        for(int i=0;i<no;i++)
+        {
+            int task_id=sc.nextInt();
+            Node newNode=new Node(task_id);
+            if(head==null)
+            {
+                head=newNode;
+                tail=newNode;
+                
+            }
+            else
+            {
+                tail.next=newNode;
+                tail=newNode;
+                
+            }
+        }
+        head=swapPairs(head);
+        print(head);
+    }
+}
