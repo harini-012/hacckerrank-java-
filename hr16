@@ -1,0 +1,111 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int prod_id;
+    Node next;
+    Node(int prod_id)
+    {
+        this.prod_id=prod_id;
+        this.next=null;
+    }
+}
+public class Solution 
+{       
+    static int carry=0;
+    static Node createNode(Node head, int prod_id)
+    {
+        Node newNode=new Node(prod_id);
+        if(head==null)
+        {
+            head=newNode;
+            return head;
+        }
+        Node temp=head;
+        while(temp.next!=null)
+        {
+            temp=temp.next;
+            
+        }
+        temp.next=newNode;
+        return head;
+    }
+    static Node pad(Node head,int diff)
+    {
+        for(int i=0;i<diff;i++)
+        {
+            Node n=new Node(0);
+            n.next=head;
+            head=n;
+          
+        }
+        return head;
+    }
+    static Node add(Node p1,Node p2)
+    {
+        if(p1==null && p2==null)
+        {
+            return null;
+        }
+
+        Node next=add(p1.next,p2.next);//to move to the last digit
+        int sum=p1.prod_id+p2.prod_id+carry;
+        Node current=new Node(sum%10);
+        current.next=next;//moves to previous digit
+        carry=sum/10;
+        return current;
+    }
+    static Node addNode(Node p1,Node p2,int no,int no2)
+    {
+      if(no<no2)
+      {
+          p1=pad(p1,no2-no);
+          
+      }
+      else if(no2<no)
+      {
+            p2=pad(p2,no-no2);
+      }
+      Node result=add(p1,p2);
+        if(carry>0)
+        {
+            Node c=new Node(carry);
+            c.next=result;
+             return c;
+        }
+        return result;
+       
+        
+    }
+    static void print(Node result)
+    {
+        Node temp=result;
+        while(temp!=null)
+        {
+            System.out.print(temp.prod_id+" ");
+            temp=temp.next;
+        }
+    }
+
+
+    public static void main(String[] args) 
+    {
+           Scanner sc=new Scanner(System.in);
+            Node p1=null,p2=null;
+            
+            int no=sc.nextInt();
+            for (int i=0;i<no;i++)
+            {
+                int pro_id1=sc.nextInt();
+                p1=createNode(p1,pro_id1);      
+            }
+            int no2=sc.nextInt();
+            for(int i=0;i<no2;i++)
+            {
+                int pro_id2=sc.nextInt();
+                p2=createNode(p2,pro_id2);
+            }
+            Node result=addNode(p1,p2,no,no2);
+            print(result);
+    }
+}
