@@ -1,0 +1,80 @@
+import java.util.*;
+
+class Node {
+    int task_id;
+    Node next;
+
+    public Node(int task_id) {
+        this.task_id = task_id;
+        this.next = null;
+    }
+}
+
+public class Solution {
+    Node head;
+
+    void insertAtEnd(int task_id) {
+        Node newNode = new Node(task_id);
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+        Node temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        temp.next = newNode;
+    }
+
+    void deleteRange(int no) {
+        if (no < 1 || head == null) {
+            return;
+        }
+
+        int index = 0;
+        Node temp = head;
+        while (temp != null) {
+            index++;
+            temp = temp.next;
+        }
+
+        if (no >= index) {
+            head = null;
+            return;
+        }
+
+        int stop = index - no;
+        temp = head;
+        for (int i = 1; i < stop; i++) {
+            temp = temp.next;
+        }
+        temp.next = null;
+    }
+
+    void display() {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.task_id + " ");
+            temp = temp.next;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Solution list = new Solution();
+
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            list.insertAtEnd(sc.nextInt());
+        }
+
+        int no = sc.nextInt();
+        list.deleteRange(no);
+
+        list.display();
+    }
+}
