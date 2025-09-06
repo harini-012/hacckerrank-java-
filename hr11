@@ -1,0 +1,29 @@
+import java.util.*;
+
+public class Solution 
+{
+
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int no=sc.nextInt();
+        int[]array=new int[no];
+        for (int i=0;i<no;i++)
+        {
+            array[i]=sc.nextInt();
+            
+        }
+        //1 2 3 4 5
+        //0 1 2 3 4 -->Index 
+        int pos=sc.nextInt();
+        int start=pos-1;//2-1=1 which is 2
+        int end=no-pos;//5-2=3   which is 4
+        int temp=array[start];
+        array[start]=array[end];
+        array[end]=temp;
+        for (int i=0;i<no;i++)
+        {
+            System.out.print(array[i] +" ");
+        }
+     }
+}
