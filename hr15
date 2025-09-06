@@ -1,0 +1,107 @@
+
+import java.util.*;
+class Node
+{
+int pro_id;
+Node next;
+Node(int pro_id)
+{
+this.pro_id=pro_id;
+this.next=null;
+
+}
+}
+public class Solution {
+    Node head;
+    void insertAtEnd(int pro_id)
+    {
+    Node newNode=new Node(pro_id);
+    if(head==null)
+    {
+        head=newNode;
+        return;
+    }
+    Node temp=head;
+    while(temp.next!=null)
+    {
+    temp=temp.next;
+    }
+    temp.next=newNode;
+    }
+    void segregateNode()
+    {
+        Node oddHead=null,oddTail=null;
+        Node evenHead=null,evenTail=null;
+        Node temp=head;
+        while(temp!=null)
+        {
+        if(temp.pro_id%2==0)
+        {
+            if(evenHead==null)
+            {
+                evenHead=evenTail=temp;
+            }
+            else
+            {
+                evenTail.next=temp;
+                evenTail=evenTail.next;
+            }
+        }
+        else
+        {
+             if(oddHead==null)
+            {
+                oddHead=oddTail=temp;
+            }
+            else
+            {
+                oddTail.next=temp;
+                oddTail=oddTail.next;
+            }
+        }
+             temp=temp.next;
+        }
+       
+    
+    if(evenHead==null)
+    {
+    head=oddHead;
+    return;
+    }
+    head=evenHead;
+    evenTail.next=oddHead;
+    if(oddTail!=null)
+    {
+    oddTail.next=null;
+    }
+    }
+    void printNode()
+        {
+            
+            Node temp=head;
+            while(temp!=null)
+            {
+                System.out.print(temp.pro_id+" ");
+                temp=temp.next;
+            }
+        } 
+    
+    public static void main(String[] args) 
+    {
+         
+        Scanner sc=new Scanner(System.in);
+        Solution sol=new Solution();
+        int no=sc.nextInt();
+        for (int i=0;i<no;i++)
+        {
+            int pro_id=sc.nextInt();
+            sol.insertAtEnd(pro_id);
+            
+            
+        }
+          sol.segregateNode();//To segregate odd and even nodes
+        sol.printNode();
+    
+       
+    }
+}
