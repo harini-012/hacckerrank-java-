@@ -1,0 +1,79 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int pro_id;
+    Node next;
+    Node(int pro_id)
+    {
+        this.pro_id=pro_id;
+        this.next=null;
+    }
+}
+public class Solution 
+{
+   
+    static Node removeDuplicate(Node head)
+    {
+         Node current=head;
+        while(current!=null)
+        {
+            Node prev=current;//pointer
+            Node temp=current.next;
+            while(temp!=null)
+            {
+            if(temp.pro_id==current.pro_id)
+            {
+                prev.next=temp.next;
+            }
+            else
+            {
+                prev=temp;
+            }
+            temp=temp.next;
+            }
+             current=current.next;
+        }
+       
+        return head;
+    }
+    static void print(Node head)
+    {
+        if(head==null)
+        {
+            return;
+        }
+        Node temp=head;
+        while(temp!=null)
+        {
+            System.out.print(temp.pro_id+" ");
+            temp=temp.next;
+            
+        }
+        
+    }
+    
+    public static void main(String[] args) 
+    {
+       Scanner sc=new Scanner(System.in);
+        int no=sc.nextInt();
+        Node head=null,tail=null;
+        for (int i=0;i<no;i++)
+        {
+            int pro_id=sc.nextInt();
+            Node newNode=new Node(pro_id);
+            if(head==null)
+            {
+                head=newNode;
+                tail=newNode;
+            }
+            else
+            {
+                tail.next=newNode;
+                tail=newNode;
+            }
+        }
+        Node result=removeDuplicate(head);
+        print(result);        
+    }
+}
