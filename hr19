@@ -1,0 +1,138 @@
+
+import java.util.*;
+class AirportStack
+{
+    int con_id;
+    AirportStack(int con_id)
+    {
+        this.con_id=con_id;
+        
+    }
+}
+public class Solution 
+{
+    final int size=100;
+    AirportStack[]Airport=new AirportStack[size];
+    int top=-1;
+    
+    
+    public void push(int con_id)
+    {
+        if(top==size-1)
+        {
+            System.out.println("Stack Overflow");
+            return;
+        }
+        else
+        {
+            top=top+1;
+            Airport[top]=new AirportStack(con_id);
+        }
+    }
+    public void pop()
+    {
+        if(top==-1)
+        {
+            System.out.println("Stack Underflow");
+            return;
+        }
+        else
+        {
+            
+            top=top-1;
+            
+        }
+        
+    }
+    public void top()
+    {
+        if(top==-1)
+        {
+             System.out.println("Stack Underflow");
+            return;
+        }
+        else
+        {
+            System.out.println(Airport[top].con_id);
+        
+            
+        }
+    }
+    public void display()
+    {
+        if (top==-1)
+        {
+            return;
+        }
+        else
+        {
+            for(int i=top;i>=0;i--)
+            {
+                System.out.println(Airport[i].con_id);
+                top=top-1;
+            }
+        }
+    }
+    public void size()
+    {
+        if(top==-1)
+        {
+            System.out.println(0);
+        }
+        else
+        {
+            int count=0;
+            for(int i=top;i>=0;i--)
+            {
+                count+=1;
+                
+            }
+            System.out.println(count);
+        }
+    }
+    public void isempty()
+    {
+        if(top==-1)
+        {
+            System.out.println("true");
+            
+        }
+        if(top!=-1)
+        {
+            System.out.println("false");
+        }
+    }
+    public static void main(String[]args)
+    {
+        Scanner sc=new Scanner(System.in);
+        Solution sol=new Solution();
+        int no=sc.nextInt();
+        sc.nextLine();
+        for(int i=0;i<no;i++)
+        {
+            String op=sc.next();
+            if(op.equals("Push"))
+            {
+               int  con_id=sc.nextInt();
+                sol.push(con_id);
+            }
+            if(op.equals("Top"))
+            {
+                sol.top();
+            }
+            if(op.equals("Pop"))
+            {
+                sol.pop();
+            }
+            if(op.equals("Size"))
+            {
+                sol.size();
+            }
+            if(op.equals("IsEmpty"))
+            {
+                sol.isempty();
+            }
+        }
+        
+    }
+}
