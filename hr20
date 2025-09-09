@@ -1,0 +1,115 @@
+import java.util.*;
+class Node
+{
+    String bookName;
+    Node next;
+    Node(String bookName)
+    {
+        this.bookName=bookName;
+        this.next=null;
+    }
+}
+class BookStack
+{
+     public Node top;
+     public int size;
+     BookStack()
+     {
+         this.top=null;
+         this.size=0;
+         
+     }
+     public  void push(String bookName)
+     {
+         Node newNode=new Node(bookName);
+         newNode.next=top;
+         top=newNode;
+         size++;
+     }
+    public void pop()
+    {
+        if(isEmpty())
+        {
+            System.out.println("Stack Underflow");
+        }
+        else
+        {
+            top=top.next;
+            size--;
+        }
+    }
+    public void top()
+    {
+        if(isEmpty())
+        {
+            System.out.println("StackUnderflow");
+            
+        }
+        else
+        {
+            System.out.println(top.bookName);
+            
+        }
+    }
+    public boolean isEmpty()
+    {
+        if(top==null)
+        {
+            
+            return true;
+        }
+        else
+        {
+        
+            return false;
+        }
+    }
+    public void size()
+    {
+        int index=0;
+        Node temp=top;
+        while(temp!=null)
+        {
+            index++;
+            temp=temp.next;
+        }
+        System.out.println(index);
+    }
+}
+public class Solution
+{
+    public static void main(String[]args)
+    {
+        Scanner sc=new Scanner(System.in);
+        int no=sc.nextInt();
+        sc.nextLine();
+        BookStack bs=new BookStack();
+        for(int i=0;i<no;i++)
+        {
+            String op=sc.nextLine();
+            if(op.startsWith("Push"))
+            {
+                String bookName=op.substring(5);
+                bs.push(bookName);
+            }
+            else if(op.equals("Pop"))
+            {
+                
+                bs.pop();
+            }
+            else if(op.equals("Top"))
+            {
+                bs.top();
+            }
+            else if(op.equals("IsEmpty"))
+            {
+                boolean ans=bs.isEmpty();
+                System.out.println(ans);
+            }
+            else if(op.equals("Size"))
+            {
+                bs.size();
+            }
+        }
+    }
+}
