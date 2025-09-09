@@ -1,0 +1,51 @@
+import java.io.*;
+import java.util.*;
+class UndoOperation
+{
+    int top;
+    
+    String[]reverse_array;
+    public UndoOperation(int size)
+    {
+        top=-1;
+        reverse_array=new String[size];
+        
+    }
+    public void push(String character)
+    {
+        top=top+1;
+        reverse_array[top]=character;
+        
+    }
+    public void pop()
+    {
+        if(top==-1)
+        {
+            System.out.println("Stack UnderFlow");
+            
+        }
+        else
+        {
+            System.out.print(reverse_array[top]);
+            top=top-1;
+        }
+    }
+    
+}
+public class Solution {
+
+    public static void main(String[] args) 
+    {
+       Scanner sc=new Scanner(System.in);
+         String character=sc.nextLine();
+        UndoOperation un=new UndoOperation(character.length());
+        for (int i=0;i<character.length();i++)
+        {
+        un.push(String.valueOf(character.charAt(i)));
+        }
+        while(un.top!=-1)
+        {
+        un.pop();
+        }
+        }
+}
