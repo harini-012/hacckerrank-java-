@@ -1,0 +1,65 @@
+import java.io.*;
+import java.util.*;
+
+public class BracketStack 
+{
+    private char[]stack;
+    private int top;
+    BracketStack(int length)//constructor
+    {
+        stack=new char[length];
+        top=-1;
+    }
+    public void push(char c)
+    {
+        top=top+1;
+        stack[top]=c;
+        
+    }
+    public boolean isEmpty()
+    {
+        return top==-1;
+    }
+    public char pop()
+    {
+        return stack[top--];
+    }
+    public static boolean isValid(String input)
+    {
+        int len=input.length();
+        BracketStack bs=new BracketStack(len);
+        
+        for(char c:input.toCharArray())//Get by character
+        {
+            if((c=='('||c=='{'|| c=='['))
+            {
+                bs.push(c);
+            }
+            else
+            {
+                if(bs.isEmpty())
+                {
+                    return false;
+                }
+                char top=bs.pop();
+                
+                
+                if((c==')'&&top!='(')||(c=='}'&&top!='{')||(c==']'&&top!='['))
+                 {
+                   return false;
+                    
+                    
+                   }
+            }//end of else
+        }
+        return bs.isEmpty();
+        }
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        String input=sc.nextLine().trim();
+        System.out.println(isValid(input));
+        
+        
+    }
+}
