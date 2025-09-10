@@ -1,0 +1,104 @@
+import java.io.*;
+import java.util.*;
+class Stack
+{
+    int top;
+    int top2;
+    int[]array;//[_,_,_,_,_,_]
+    int capacity;//6
+    Stack(int capacity)
+    {
+       top=-1;//top=-1
+       top2=capacity;//top2=6
+       array=new int[capacity];
+    }
+    public void push1(int number)
+    {
+        
+        if(top>=top2-1)//-1<5//0<5
+        {
+            return;
+        }
+        else// in stack 1[20,10]
+        {
+            top=top+1;//0//1
+            array[top]=number;//[10,_,_,_,_,_]//[10,20,_,_,_,_] 
+            
+        }
+    }
+    public void push2(int number)
+    {
+        
+        if(top>=top2-1)//1<=5//4<=5
+        {
+            return;
+        }
+        else//stack 2--40 30
+        {
+             top2=top2-1;//5//4
+            array[top2]=number;//array[6]//[10,20,_,_,_,30]//[10,20,_,_,40,30]
+        }
+    }
+    public void pop()
+    {
+        if(top==-1)
+        {
+            return;
+        }
+        else
+        {
+            System.out.println(array[top]);//array[1]==20
+            top=top-1;//top=0
+        }
+    }
+    public void pop2()
+    {
+        if(top2==capacity)
+        {
+            return;
+        }
+        else
+        {
+            System.out.println(array[top2]);//array[4]==40
+            top2=top2+1;//5
+        }
+    }
+    
+}
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int capacity=sc.nextInt();//6
+        Stack s=new Stack(capacity);
+        
+        while(true)
+        {
+            if (!sc.hasNextInt()) 
+            {break;}  
+            int operation=sc.nextInt();
+            if(operation==-1)
+            {
+                break;
+            }
+        else if(operation==1)
+        {
+            int number=sc.nextInt();
+            s.push1(number);
+        }
+        else if(operation==2)
+        {
+            int number1=sc.nextInt();
+            s.push2(number1);
+        }
+        else if(operation==3)
+        {
+            s.pop();
+        }
+        else if(operation==4)
+        {
+            s.pop2();
+        }
+    }
+}
+}
