@@ -1,0 +1,66 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution 
+{
+    public static int calculateExpression(String exp)
+    {
+        int len=exp.length();
+        int[]stack=new int[len];//array of stack
+        int top=-1;
+        int num=0;
+        char sign='+';
+        for(int i=0;i<len;i++)
+        {
+            char c=exp.charAt(i);
+            if(Character.isDigit(c))//10 first it will take 1 and ascii is 49 then 0 ascii is 48
+            {
+                //Ascii codes 0-48 1-49 2-50 
+                num=num*10+c-'0';//num=0 0=0*10+49-48=1//num=1 1=1*10+48-48=10 
+            }
+            if(!Character.isDigit(c)&&c!=' '||i==len-1)
+            {
+                if(sign=='+')
+                {
+                    stack[++top]=num;
+                }
+                else if(sign=='-')
+                {
+                    stack[++top]=-num;
+                }
+                else if(sign=='*')
+                {
+                    stack[top]=stack[top]*num;
+                }
+                else if(sign=='/')
+                {
+                    stack[top]=stack[top]/num;
+                }
+                 num=0;
+        sign=c;
+            
+           }
+           
+        }//end of the loop
+        
+        int result=0;
+        for(int i=0;i<=top;i++)
+        {
+            result+=stack[i];
+            
+        }
+        return result;
+        
+        
+        
+        
+    }
+
+    public static void main(String[] args) 
+    {
+       Scanner sc=new Scanner(System.in);
+       String expression=sc.nextLine();
+       int result=calculateExpression(expression);    
+       System.out.println(result);  
+    }
+}
