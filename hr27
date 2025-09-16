@@ -1,0 +1,105 @@
+import java.io.*;
+import java.util.*;
+
+public class InfixtoPrefix {
+
+    private static boolean isOperator(String s){
+        return s.length()==1 && "+-*/".indexOf(s.charAt(0)) >= 0;
+    }
+
+    private static boolean isOperand(String s){
+        return s.matches("[A-Za-z0-9]+");
+    }
+
+    private static int precedence(String s){
+        char c = s.charAt(0);
+        if(c=='+'|| c=='-'){
+            return 1;
+        }
+        if(c=='*'|| c=='/'){
+            return 2;
+        }
+        return -1;
+    }
+
+    public static String infixToPrefix(String infix){
+        boolean isSpaced = infix.contains(" ");
+
+        List<String> tokens = new ArrayList<>();
+
+        if(isSpaced){
+            for(String t: infix.split("\\s+")){
+                tokens.add(t);
+            }
+        }
+        else{
+            for(int i = 0; i < infix.length(); i++){
+                char c = infix.charAt(i);
+                if(c==' '){
+                    continue;
+                }
+                tokens.add(String.valueOf(c));
+            }
+        }
+
+        Collections.reverse(tokens);
+
+        for(int i=0; i<tokens.size(); i++){
+            if(tokens.get(i).equals(")")){
+                tokens.set(i,"(");
+            }
+            else if (tokens.get(i).equals("(")){
+                tokens.set(i,")");
+            }
+        }
+
+        Stack<String> st = new Stack<>();
+        List<String> postfix = new ArrayList<>();
+
+        for(String t: tokens){
+            if(isOperand(t)){
+                postfix.add(t);
+            }
+            else if(t.equals("(")){
+                st.push(t);
+            }
+            else if(t.equals(")")){
+                while(!st.isEmpty() && !st.peek().equals("(")){
+                    postfix.add(st.pop());
+                }
+                if(!st.isEmpty()){
+                    st.pop();
+                }
+            }
+            else if(isOperator(t)){
+                while(!st.isEmpty() && isOperator(st.peek()) && precedence(st.peek()) > precedence(t)){
+                    postfix.add(st.pop());
+                }
+                st.push(t);
+            }
+        }
+
+        while(!st.isEmpty()){
+            postfix.add(st.pop());
+        }
+
+        Collections.reverse(postfix);
+
+        if(isSpaced){
+            return String.join(" ", postfix);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for(String p: postfix){
+            sb.append(p);
+        }
+        return sb.toString();
+    }
+
+    public static void main(String[] args){
+        Scanner s = new Scanner(System.in);
+        String infix = s.nextLine().trim();
+        String prefix = infixToPrefix(infix);
+        System.out.println(prefix);
+    }
+}
