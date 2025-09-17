@@ -1,0 +1,59 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution 
+{
+    
+    private static boolean isredundant(String expression)
+    {
+        Stack<Character> st=new Stack<>();
+        for(char c:expression.toCharArray())
+        {
+            if(c!=')')
+            {
+                st.push(c);
+            }
+            else
+            {
+                boolean opFound=false;
+                while(!st.isEmpty() && st.peek()!='(')
+                {
+                    char top=st.pop();
+                    if(top=='+'||top=='-'||top=='*'||top=='/')
+                    {
+                        opFound=true;
+                    }
+                }
+                if(!st.isEmpty())//pop until find a open bracket
+                {
+                    st.pop();
+                }
+                if(!opFound)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+            
+    }
+    public static void main(String[] args) 
+    {
+          Scanner sc=new Scanner(System.in);
+          int n=sc.nextInt();
+           sc.nextLine();
+        for(int i=0;i<n;i++)
+        {
+            String expression=sc.nextLine();
+            if(isredundant(expression))
+            {
+                System.out.println("Yes");
+            }
+            else
+            {
+                System.out.println("No");
+                
+            }
+        }
+    }
+}
