@@ -1,0 +1,96 @@
+import java.util.*;
+class Stack
+{
+    private char[] arr;
+    private int top;
+    private int capacity;
+    Stack(int capacity)
+    {
+        this.capacity=capacity;
+        arr=new char[capacity];
+        top=-1;
+    }
+    public void push(char c) 
+    {
+        if (top < capacity - 1) 
+        {
+            top=top+1;//top=0 a//top=1 z//top=2 x
+            arr[top] = c;
+        }
+    }
+    public char pop()
+    {
+        if(!isEmpty())
+        {
+            return arr[top--];//top=2-1=1//1-1=0
+           
+        }
+        else
+        {
+            return '\0';
+        }
+    }
+    public char peek()
+    {
+        if(!isEmpty())
+        {
+            return arr[top];
+            
+        }
+        else
+        {
+            return '\0';
+        }
+    }
+    public boolean isEmpty() 
+    {
+        return top == -1;
+    }
+    public String getString()
+    {
+        StringBuilder sb=new StringBuilder();//new String
+        for(int i=0;i<=top;i++)//i=0 top=0//i=0 i<=1//i=0 i<=2
+        {
+            sb.append(arr[i]);//a is in string//az is in string//azx in string
+        }
+        return sb.toString();//a is return//az is returned//azx is retuned//ay is retuned
+    }
+
+}
+public class Solution
+{
+    public static void removeDuplicate(String s)
+    {
+        Stack stack=new Stack(s.length());//new Stack(6)
+        for (int i = 0; i < s.length(); i++) //(i=0;i<6)//i=1;i<6//i=2;i<6//i=3 i<6//i=4 i<6//i=5 i<6
+        {
+            char c = s.charAt(i);//a//z//x//x//z
+
+            if (!stack.isEmpty() && stack.peek() == c)//stack empty//stack not empty but a !=z//stack empty z not x
+            {
+                stack.pop(); //x is poped//z is poped
+            } else {
+                stack.push(c);//a is in stack//z is in stack//x is in stack//y is in stack
+            }
+        }
+
+        String result = stack.getString();//stack.getString();//String
+        if(result.isEmpty())
+        {
+            System.out.println("Empty String");
+        }
+        else
+        {
+            System.out.println(result);//ay
+        }
+        
+    
+    }
+    public static void main(String[]args)
+    {
+        Scanner sc=new Scanner(System.in);
+        String s=sc.nextLine();//azxxzy
+        removeDuplicate(s);//removeDuplicate(azxxzy)
+       
+    }
+}
