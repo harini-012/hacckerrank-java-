@@ -1,0 +1,74 @@
+import java.util.*;
+
+public class MovieQueue {
+    private String[] queue;
+    private int front, rear, size, capacity;
+
+    MovieQueue(int c) {
+        this.capacity = c;
+        this.front = 0;
+        this.rear = 0;
+        this.size = 0;
+        queue = new String[c];
+    }
+
+    public void Enqueue(String custName) {
+        if (size == capacity) {
+            System.out.println("Queue is full. Cannot add " + custName);
+            return;
+        }
+        queue[rear] = custName;
+        rear = (rear + 1) % capacity;
+        size++;
+    }
+
+    public void Dequeue() {
+        if (size == 0) {
+            System.out.println("Served Customer: Queue is empty. No customer to serve.");
+            return;
+        }
+        String servedCustomer = queue[front];
+        System.out.println("Served Customer: " + servedCustomer);
+        front = (front + 1) % capacity;
+        size--;
+    }
+
+    public void Display() {
+        if (size == 0) {
+            System.out.println("Queue is empty.");
+            return;
+        }
+        System.out.print("Current Queue:");
+        for (int i = 0; i < size; i++) {
+            int index = (front + i) % capacity;
+            System.out.print(" " + queue[index]);
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNextLine()) { sc.close(); return; }
+        int capacity = Integer.parseInt(sc.nextLine().trim());
+        int operations = Integer.parseInt(sc.nextLine().trim());
+        MovieQueue mq = new MovieQueue(capacity);
+
+        for (int i = 0; i < operations; i++) {
+            if (!sc.hasNextLine()) break;
+            String input = sc.nextLine().trim();
+            if (input.isEmpty()) { i--; continue; }
+            String[] parts = input.split("\\s+");
+            String command = parts[0].toUpperCase();
+
+            if (command.equals("ENQUEUE")) {
+                String custName = parts.length > 1 ? parts[1] : "";
+                mq.Enqueue(custName);
+            } else if (command.equals("DEQUEUE")) {
+                mq.Dequeue();
+            } else if (command.equals("DISPLAY")) {
+                mq.Display();
+            }
+        }
+        sc.close();
+    }
+}
