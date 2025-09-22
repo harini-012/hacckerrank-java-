@@ -1,0 +1,89 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution 
+{
+    static class Patient
+    {
+        String pName;
+        int pSeverity;
+        Patient(String pName,int pSeverity)
+        {
+            this.pName=pName;
+            this.pSeverity=pSeverity;
+        }
+    }
+    List<Patient>pQueue=new ArrayList<>();
+    public void enqueue(String pName,int pSeverity)
+    {
+        pQueue.add(new Patient(pName,pSeverity));
+    }
+    public void dequeue()
+    {
+        if(pQueue.isEmpty())
+        {
+            System.out.println("Queue is empty.");
+            return;
+        }
+        Patient highest=pQueue.get(0);
+        int index=0;
+        for(int i=1;i<pQueue.size();i++)
+        {
+            Patient p=pQueue.get(i);
+            if(p.pSeverity>highest.pSeverity)
+            {
+                highest=p;
+                index=i;
+            }
+        }
+        
+        pQueue.remove(index);//to remove based on index position
+        System.out.println("Treated Patient: "+highest.pName);   
+    }
+    public void display()
+    {
+        if(pQueue.isEmpty())
+        {
+            System.out.println("Queue is empty.");
+            return;
+        }
+        List<Patient>sorted=new ArrayList<>(pQueue);
+        sorted.sort((a,b)->b.pSeverity-a.pSeverity);//lambda expression
+       System.out.print("Current Queue: ");
+        for(int i=0;i<sorted.size();i++)
+        {
+            Patient p=sorted.get(i);
+            System.out.print(p.pName+"("+p.pSeverity+")");
+            if(i<sorted.size()-1) 
+            {
+                System.out.print(" ");
+            }
+                   }
+        System.out.println(" ");
+        
+    }
+    
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int operations=Integer.parseInt(sc.nextLine());
+        Solution sol=new Solution();
+        for(int i=0;i<operations;i++)
+        {
+            String[]parts=sc.nextLine().split(" ");
+            if(parts[0].equals("ENQUEUE"))
+            {
+                sol.enqueue(parts[1],Integer.parseInt(parts[2]));
+                
+            }
+            else if(parts[0].equals("DEQUEUE"))
+            {
+                sol.dequeue();
+            }
+            else if(parts[0].equals("DISPLAY"))
+            {
+                sol.display();
+            }
+        }
+    }
+}
