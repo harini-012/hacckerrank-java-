@@ -1,0 +1,79 @@
+import java.io.*;
+import java.util.*;
+class Stack
+{
+    Queue<Integer>q1=new LinkedList<>();// q1=[]
+    Queue<Integer>q2=new LinkedList<>();//q2=[]
+    public void push(int version)
+    {
+        q2.add(version);//q2=[1]//q2=[2]
+        while(!q1.isEmpty())//q1 empty//q1 not empty
+        {
+            q2.add(q1.remove());//q2=[2,1]
+        }
+        Queue<Integer>temp=q1;//temp=q1//temp=q1[]
+        q1=q2;//q1=[1]//q1=[2,1]
+        q2=temp;//q2=[]//q2=[]
+        System.out.println("Pushed: "+ version);//pushed 1//pushed 2
+        
+    }
+    public void pop()
+    {
+        if(q1.isEmpty())
+        {
+            return;
+        }
+        int removed=q1.remove();//2
+        System.out.println("Popped: "+removed);
+    }
+    public void top()
+    {
+        if(q1.isEmpty())
+        {
+            return;
+        }
+        System.out.println("Top version: "+q1.peek());//2 //1
+    }
+    public void isEmpty() 
+    {
+        if(q1.isEmpty())
+        {
+            System.out.println("Is stack empty: true");//false
+        }
+        else
+        {
+            System.out.println("Is stack empty: false");
+        }
+    }
+}
+public class Solution 
+{
+
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int operations=sc.nextInt();//6
+        Stack stack=new Stack();
+        for(int i=0;i<operations;i++)//
+        {
+            String op=sc.next();// Push 1//Push 2
+            if(op.equals("push"))
+            {
+                int version=sc.nextInt();
+                stack.push(version);
+            }
+            else if(op.equals("pop"))
+            {
+                stack.pop();
+            }
+            else if(op.equals("top"))
+            {
+                stack.top();
+            }
+            else if(op.equals("empty"))
+            {
+                stack.isEmpty();
+            }
+        }
+    }
+}
