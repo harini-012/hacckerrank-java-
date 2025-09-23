@@ -1,0 +1,138 @@
+import java.io.*;
+import java.util.*;
+class Thetre
+{
+    int capacity;
+    int[] queue;
+    int front, rear;
+
+    Thetre(int capacity) 
+    {
+        this.capacity = capacity;
+        this.front = -1;
+        this.rear = -1;
+        this.queue = new int[capacity];
+    }
+
+    public void enqueue(int number) 
+    {
+        if ((front == 0 && rear == capacity - 1) || (rear + 1 == front))
+        {
+            System.out.println("Booking failed");
+            return;
+        }
+        if(front == -1) 
+        {
+            rear = 0;
+            front = 0;
+            queue[rear] = number;
+        } 
+        else if (rear == capacity - 1 && front != 0) 
+        {
+            rear = 0;
+            queue[rear] = number;
+        } 
+        else 
+        {
+            rear = rear + 1;
+            queue[rear] = number;
+        }
+        System.out.println("Booked seat: " + number);
+    }
+
+    public void dequeue() 
+    {
+        if(front == -1) 
+        {
+            System.out.println("No booking to cancel");
+            return;
+        }
+        System.out.println("Canceled seat: " + queue[front]);
+        if(front == rear) 
+        {
+            front = -1;
+            rear = -1;
+        } 
+        else if(front == capacity - 1) 
+        {
+            front = 0;
+        } 
+        else 
+        {
+            front = front + 1;
+        }
+    }
+
+    public void front() 
+    {
+        if(front == -1) 
+        {
+            System.out.println("No bookings");
+            return;
+        }
+        System.out.println("Next seat to be canceled: " + queue[front]);
+    }
+
+    public void isempty() 
+    {
+        if(front == -1) 
+        {
+            System.out.println("true");
+        }
+            else 
+            {
+                System.out.println("false");
+    }
+    }
+
+    public void isFull() 
+    {
+        if ((front == 0 && rear == capacity - 1) || (rear + 1 == front)) 
+        {
+            System.out.println("true");
+        }
+        else
+        {
+            
+            System.out.println("false");
+        }
+    }
+}
+
+public class Solution 
+{
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+        int capacity = sc.nextInt();
+        Thetre ti = new Thetre(capacity);
+        int no = sc.nextInt();
+        sc.nextLine();
+        for(int i = 0; i < no; i++) 
+        {
+            String op = sc.next();
+            if(op.equals("enqueue")) 
+            {
+                int number = sc.nextInt();
+                ti.enqueue(number);
+            } 
+            else if(op.equals("dequeue")) 
+            {
+                ti.dequeue();
+            } 
+            else if(op.equals("front"))
+            {
+                ti.front();
+            } 
+            else if(op.equals("isEmpty")) 
+            {
+                ti.isempty();
+            } 
+            else if(op.equals("isFull")) 
+            {
+                ti.isFull();
+            }
+        }
+    
+    }
+}
