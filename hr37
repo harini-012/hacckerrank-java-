@@ -1,0 +1,93 @@
+import java.util.*;
+class CustomerStack
+{
+    Stack<Integer>s1=new Stack<>();
+    Stack<Integer>s2=new Stack<>();
+    CustomerStack()
+    {
+        s1=new Stack<>();
+        s2=new Stack<>();
+    }
+    public void push(int order)
+    {
+        s1.push(order);
+        System.out.println("Order added: "+order);
+    }
+    public void pop()
+    {
+        CopyStack();
+        if(!s2.isEmpty())
+        {
+            int order=s2.pop();
+             System.out.println("Order processed: "+order);
+        }
+    }
+    public void peek()
+    {
+        CopyStack();
+        if(!s2.isEmpty())
+        {
+            int order=s2.peek();
+             System.out.println("Next order: " +order);
+        }
+    }
+    public void CopyStack()
+    {
+        if(s2.isEmpty())
+        {
+            while(!s1.isEmpty())
+            {
+                s2.push(s1.pop());
+                
+            }
+        }
+    }
+    public void empty()
+    {
+        if(s1.isEmpty()&&s2.isEmpty())
+        {
+            System.out.println("Is queue empty: true");
+        }
+        else
+        {
+            System.out.println("Is queue empty: false");
+        }
+    }
+    
+}
+public class Solution
+{
+    public static void main(String[]args)
+    {
+         Scanner sc=new Scanner(System.in);
+         CustomerStack cus=new CustomerStack();
+         int no=sc.nextInt();
+        sc.nextLine();
+        for(int i=0;i<no;i++)
+        {
+            String op=sc.next();
+            if(op.equals("push"))
+            {
+                int order=sc.nextInt();
+                cus.push(order);
+            }
+            else if(op.equals("pop"))
+            {
+                cus.pop();
+            }
+            else if(op.equals("peek"))
+            {
+                cus.peek();
+            }
+            else if(op.equals("empty"))
+            {
+                cus.empty();
+                
+            }
+            else
+            {
+                System.out.println("Invalid operation");
+            }
+        }
+    }
+}
