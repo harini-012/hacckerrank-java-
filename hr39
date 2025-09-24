@@ -1,0 +1,68 @@
+import java.io.*;
+import java.util.*;
+class Queue
+{
+    int[]ticket;
+    int front;
+    int rear;
+    int capacity;
+    Queue(int capacity)
+    {
+        this.capacity=capacity;
+        front=-1;
+        rear=-1;
+        ticket=new int[capacity];
+    }
+    public void enqueue(int number)
+    {
+        if(rear==capacity-1)
+        {
+            return;
+        }
+        if(front==-1)
+        {
+            rear=rear+1;
+
+            front=0;
+            ticket[rear]=number;
+
+        }
+        else 
+        {
+             rear=rear+1;
+
+            ticket[rear]=number;
+        }
+    }
+    public void reverse()
+    {
+        if(front==-1)
+        {
+            return;
+        }
+        for(int i=rear;i>=front;i--)
+        {
+            System.out.print(ticket[i]+" ");
+            
+        }
+    }
+}
+public class Solution 
+{
+    
+    public static void main(String[] args) 
+    {
+        
+      Scanner sc=new Scanner(System.in);
+    Solution sol=new Solution();
+       
+        int no=sc.nextInt();
+         Queue ts=new Queue(no);
+        for (int i=0;i<no;i++)
+        {
+            int ticket=sc.nextInt();
+            ts.enqueue(ticket);
+        }
+        ts.reverse();
+    }
+}
