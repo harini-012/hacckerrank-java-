@@ -1,0 +1,92 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution 
+{
+    class Queue
+    {
+        int[]queue;
+        int[]result;
+        int front;
+        int rear;
+        int capacity;
+        int rear1;
+        int front1;
+        Queue(int capacity)
+        {
+            this.capacity=capacity;
+            queue=new int[capacity];
+            result=new int[capacity];
+            
+             rear=-1;
+             rear1=-1;
+            front=0;
+             front1=0;
+        }
+    
+    public void enqueue(int value)
+    {
+        if(rear==capacity-1)
+        {
+            return;
+        }
+        rear=rear+1;
+        front=front+1;
+        queue[rear]=value;
+        
+    }
+    public void newqueue(int k)
+    {
+        int n=rear+1;
+        if(k<=0||k>n)
+        {
+            return;
+        }
+        List<Integer>reverse=new ArrayList<>();
+        for(int i=0;i<k;i++)
+        {
+            reverse.add(queue[i]);
+        }
+        
+        for(int i=reverse.size()-1;i>=0;i--)
+        {
+            if(rear1==capacity-1)
+            {
+                return;
+            }
+            rear1=rear1+1;
+            front1=front1+1;
+            result[rear1]=reverse.get(i);
+        }
+        for(int i=k;i<=capacity-1;i++)
+        {
+            rear1=rear1+1;
+            result[rear1]=queue[i];
+        }
+    }
+    public void display()
+    {
+       for(int i=0;i<=rear1;i++)
+       {
+            System.out.print(result[i]+" ");
+       }
+            
+        
+    }
+    }
+    public static void main(String[] args) 
+    {
+       Scanner sc=new Scanner(System.in);
+        Solution sol=new Solution();
+        int no=sc.nextInt();
+        Queue q=sol.new Queue(no);
+        for(int i=0;i<no;i++)
+        {
+            int value=sc.nextInt();
+            q.enqueue(value);
+        }
+        int k=sc.nextInt();
+        q.newqueue(k);
+        q.display();
+    }
+}
