@@ -1,0 +1,79 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int value;
+    Node left,right;
+    Node(int value)
+    {
+        this.value=value;
+        this.left=null;
+        this.right=null;
+    }
+}
+
+public class Solution 
+{
+    public static Node insertNode(Node root,int value)
+    {
+        if(root==null)
+        {
+           return new Node(value);   
+        }
+        if(value<root.value)
+        {
+            root.left=insertNode(root.left,value);
+        }
+        else 
+        {
+            root.right=insertNode(root.right,value);
+        }
+        return root;
+        
+    }
+    static void printLevel(Node root,int i)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        if(i==1)
+        {
+            System.out.print(root.value+" ");
+        }
+        if(i>1)
+        {
+            printLevel(root.left,i-1);
+            printLevel(root.right,i-1);
+        }
+    }
+    static int height(Node root)
+    {
+        if(root==null)
+        {
+            return 0;
+        }
+        return 1+Math.max(height(root.left),height(root.right));
+        }
+    public static void levelOrder(Node root)
+    {
+        int h=height(root);
+        for(int i=1;i<=h;i++)
+        {
+            printLevel(root,i);
+        }
+        
+    }
+    public static void main(String[] args) 
+    {
+      Scanner sc=new Scanner(System.in);
+      int no=sc.nextInt();
+      Node root=null;
+        for(int i=0;i<no;i++)
+        {
+            int value=sc.nextInt();
+           root= insertNode(root,value);
+        }
+        levelOrder(root);
+    }
+}
