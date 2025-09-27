@@ -1,0 +1,68 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int value;
+    Node left,right;
+    Node(int value)
+    {
+        this.value=value;
+        this.left=null;
+        this.right=null;
+    }
+}
+public class Solution 
+{
+    
+    Node root;
+     void buildTree(String[] arr) 
+     {
+        if (arr.length==0||arr[0].equals("null")) 
+        {
+            return;
+        }
+        root = new Node(Integer.parseInt(arr[0]));
+        List<Node> queue =new ArrayList<>();
+        queue.add(root);
+        int qIndex=0;
+         int i=1;
+         while(i<arr.length)
+         {
+             Node current=queue.get(qIndex++);
+             if(i<arr.length&&!arr[i].equals("null"))
+             {
+                 current.left=new Node(Integer.parseInt(arr[i]));
+                 queue.add(current.left);             
+             
+             }
+             i++;
+             if(i<arr.length&&!arr[i].equals("null"))
+             {
+                 current.right=new Node(Integer.parseInt(arr[i]));
+                 queue.add(current.right);             
+             
+             }
+             i++;
+         }
+    }
+    void inorder(Node root)
+    {
+        if(root!=null)
+        {
+            inorder(root.left);
+            System.out.print(root.value+" ");
+            inorder(root.right);
+        }
+    }
+    
+    public static void main(String[] args) 
+    {
+       Solution sol=new Solution();
+       Scanner sc=new Scanner(System.in);
+       int no=sc.nextInt();
+        sc.nextLine();
+       String[]values=sc.nextLine().split(" ");
+        sol.buildTree(values);
+        sol.inorder(sol.root);
+    }
+}
