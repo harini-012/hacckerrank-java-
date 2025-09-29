@@ -1,0 +1,62 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int book;
+    Node right,left;
+    Node(int book)
+    {
+        this.book=book;
+        this.left=null;
+        this.right=null;
+    }
+}
+public class Solution 
+{
+    static int count;
+   public static Node insertNode(Node root,int book)
+   {
+       if(root==null)
+       {
+           return new Node(book);
+       }
+       if(book<root.book)
+       {
+           root.left=insertNode(root.left,book);
+       }
+       else
+       {
+           root.right=insertNode(root.right,book);
+       }
+       return root;
+   }
+         
+    public static int count(Node root)
+    {
+        
+        if(root==null)
+        {
+            return 0;
+        }
+        count++;
+      
+        count(root.left);
+        count(root.right);
+        return count;
+        
+    }
+    public static void main(String[] args) 
+    {
+       Scanner sc=new Scanner(System.in);
+        int no=sc.nextInt();
+        Node root=null;
+        for(int i=0;i<no;i++)
+        {
+            int book=sc.nextInt();
+            root=insertNode(root,book);
+        }
+       int result=count(root);
+       System.out.println(result);
+    
+    }
+}
