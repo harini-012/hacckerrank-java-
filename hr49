@@ -1,0 +1,89 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int value;
+    Node left,right;
+    Node(int value)
+    {
+        this.value=value;
+        this.left=null;
+        this.right=null;
+    }
+}
+public class Solution 
+{
+    static Node buildTree(String[]values)
+    {
+        if(values.length==0||values[0].equals("null"))
+        {
+            return null;
+        }
+        Node root=new Node(Integer.parseInt(values[0]));
+        Queue<Node> q=new LinkedList<>();
+        q.add(root);
+        int i=1;
+        while(!q.isEmpty()&&i<values.length)
+        {
+            Node current=q.poll();
+            if(i<values.length&&!values[i].equals("null"))
+            {
+                current.left=new Node(Integer.parseInt(values[i]));
+                q.add(current.left);
+            }
+            i++;
+            if(i<values.length&&!values[i].equals("null"))
+            {
+                current.right=new Node(Integer.parseInt(values[i]));
+                q.add(current.right);
+            }
+            i++;
+        }
+        return root;
+    }
+    static void findrightmost(Node root)
+    {
+        
+        if(root==null)
+        {
+            
+            return;
+        }
+        Queue<Node>q=new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty())
+        {
+            int size=q.size();
+            Node rightmost=null;
+            for(int i=0;i<size;i++)
+            {
+                Node current=q.poll();
+                rightmost=current;
+            
+             if (current.left != null)
+             {
+                 q.add(current.left);
+             }
+                 if (current.right != null) 
+                 {
+                     q.add(current.right);
+            }
+        }
+
+    System.out.print(rightmost.value+" ");
+}
+    }
+        
+        
+    
+    
+
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int n=Integer.parseInt(sc.nextLine());
+        String[]values=sc.nextLine().split(" ");
+        Node root=buildTree(values);
+        findrightmost(root);
+    }
+}
