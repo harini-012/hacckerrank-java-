@@ -1,0 +1,71 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int value;
+    Node left,right;
+    Node(int value)
+    {
+        this.value=value;
+        this.right=right;
+    }
+}
+
+public class Solution 
+{
+    static Node buildTree(String[]values)
+    {
+        if(values.length==0||values[0].equals("null"))
+        {
+            return null;
+        }
+        Node root=new Node(Integer.parseInt(values[0]));
+        Queue<Node>q=new LinkedList<>();
+        q.add(root);
+        int i=1;
+        while(!q.isEmpty()&&i<values.length)
+        {
+            Node current=q.poll();
+            if(i<values.length&&!values[i].equals("null"))
+            {
+                current.left=new Node(Integer.parseInt(values[i]));
+                q.add(current.left);
+            }
+            i++;
+            
+            if(i<values.length&&!values[i].equals("null"))
+            {
+                current.right=new Node(Integer.parseInt(values[i]));
+                q.add(current.right);
+            }
+            i++;
+            
+        }
+        return root;
+    }
+    static int findsum(Node root,int current)
+    {
+       if(root==null)
+       {
+           return 0;
+       }
+       current=current*10+root.value;
+        if(root.left==null&&root.right==null)
+        {
+            return current;
+        }
+        return findsum(root.left,current)+findsum(root.right,current);
+    }
+
+    public static void main(String[] args) 
+    {
+       Scanner sc=new Scanner(System.in);
+       int no=sc.nextInt();
+        sc.nextLine();
+        String[]values=sc.nextLine().split(" ");
+        Node root=buildTree(values);
+        int sum=findsum(root,0);
+        System.out.println(sum);
+      
+    }
+}
