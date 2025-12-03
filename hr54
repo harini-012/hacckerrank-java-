@@ -1,0 +1,86 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int data;
+    Node left,right;
+    Node(int data)
+    {
+        this.data=data;
+        this.left=null;
+        this.right=null;
+    }
+    
+}
+public class Solution 
+{
+    
+    static Node buildTree(int[]arr)
+    {
+        if(arr.length==0)
+        {
+            return null;
+        }
+        Queue<Node>q=new LinkedList<>();
+        int i=1;
+        Node root=new Node(arr[0]);
+        q.add(root);
+        while(i<arr.length)
+        {
+            Node current=q.poll();
+            if(i<arr.length)
+            {
+                current.left=new Node(arr[i]);
+                i++;
+                q.add(current.left);
+            }
+            if(i<arr.length)
+            {
+                current.right=new Node(arr[i]);
+                i++;
+                q.add(current.right);
+            }
+        }
+        return root;
+    }
+    static void invertTree(Node root)
+    {
+        Stack<Node>s1=new Stack<>();
+        Queue<Node>q=new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty())
+        {
+            int size=q.size();
+            for (int i=0;i<size;i++)
+            {
+                Node current=q.poll();
+                s1.push(current);
+            
+            if (current.left!=null) 
+            {
+                q.add(current.left);
+            }
+            if(current.right!=null) 
+            {
+                q.add(current.right);
+            }
+            }
+            while(!s1.isEmpty())
+            {
+                System.out.print(s1.pop().data+" ");
+            }
+        }
+    }
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int no=sc.nextInt();
+        int[]arr=new int[no];
+        for(int i=0;i<no;i++)
+        {
+            arr[i]=sc.nextInt();
+        }
+        Node root=buildTree(arr);
+      invertTree(root);
+    }
+}
