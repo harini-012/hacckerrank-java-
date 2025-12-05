@@ -1,0 +1,103 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int data;
+    Node left,right;
+    Node(int data)
+    {
+        this.data=data;
+        this.left=null;
+        this.right=null;
+    }
+}
+public class Solution 
+{
+    static Node buildTree(Node root,int value)
+    {
+        if(root==null)
+        {
+            return new Node(value);
+        }
+        if(value<root.data)
+        {
+            root.left=buildTree(root.left,value);
+            
+        }
+        if(value>root.data)
+        {
+            root.right=buildTree(root.right,value);
+        }
+        return root;
+    }
+    static Node delNode(Node root,int delete)
+    {
+        if(root==null)
+        {
+            return null;
+        }
+        if(delete==root.data)
+        {
+            if(root.left==null&&root.right==null)
+            {
+                return null;
+            }
+            if(root.left==null)
+            {
+                return root.right;
+            }
+            if(root.right==null)
+            {
+                return root.left;
+            }
+            Node succ=minValue(root.right);
+            root.data=succ.data;
+            root.right=delNode(root.right,succ.data);
+        }
+    
+        
+        if(delete<root.data)
+        {
+            root.left=delNode(root.left,delete);
+        }
+        if(delete>root.data)
+        {
+            root.right=delNode(root.right,delete);
+        }
+        return root;
+    }
+    static Node minValue(Node node)
+    {
+        while(node.left!=null)
+        {
+            node=node.left;
+         
+        }
+           return node;
+    }
+    static void inorder(Node ans)
+    {
+        if(ans==null)
+        {
+            return;
+        }
+        inorder(ans.left);
+        System.out.print(ans.data+" ");
+        inorder(ans.right);
+    }
+
+    public static void main(String[] args) 
+    {
+      Scanner sc=new Scanner(System.in);
+      int no=sc.nextInt();
+      Node root=null;
+      for(int i=0;i<no;i++)
+      {
+          int value=sc.nextInt();
+          root=buildTree(root,value);
+      }
+        int delete=sc.nextInt();
+        Node ans=delNode(root,delete);
+        inorder(ans);
+    }
+}
