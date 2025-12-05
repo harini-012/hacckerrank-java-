@@ -1,0 +1,78 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int data;
+    Node left,right;
+    Node(int data)
+    {
+        this.data=data;
+        this.left=null;
+        this.right=null;
+        
+    }
+}
+public class Solution //root=18//root=10//root=5//root=null//root=15//root=null
+{
+    static Node buildTree(Node root,int value)//18 10 25 5 15 20 30                           18
+    {                                                                                   //  /    \    
+        if(root==null)                                                                  // 10     25
+        {                                                                               // /\    /  \    
+            return new Node(value);                                                    // 5  15  20  30
+        }
+        if(value<root.data)
+        {
+            root.left=buildTree(root.left,value);
+        }
+        if(value>root.data)
+        {
+            root.right=buildTree(root.right,value);
+        }
+        return root;
+    }
+    static Node trim(Node root,int start,int end)
+    {
+        if(root==null)
+        {
+            return null;
+        }
+        if(root.data<start)
+        {
+            return trim(root.right,start,end);
+        }
+        if(root.data>end)
+        {
+            return trim(root.left,start,end);
+        }
+        root.left=trim(root.left,start,end);
+        root.right=trim(root.right,start,end);
+        return root;
+    }
+    static void preorder(Node ans)
+    {
+        if(ans==null)
+        {
+            return;
+        }
+        System.out.print(ans.data+" ");//
+        preorder(ans.left);
+        preorder(ans.right);
+    }
+ 
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int no=sc.nextInt();
+        Node root=null;
+        for(int i=0;i<no;i++)
+        {
+            int value=sc.nextInt();
+            root=buildTree(root,value);
+        }
+        int start=sc.nextInt();
+        int end=sc.nextInt();
+        Node ans=trim(root,start,end);
+        preorder(ans);
+        
+    }
+}
