@@ -1,0 +1,66 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int data;
+    Node left,right;
+    Node(int data)
+    {
+        this.data=data;
+        this.left=null;
+        this.right=null;
+    }
+}
+public class Solution 
+{
+    static Node buildTree(Node root,int value)
+    {
+        if(root==null)
+        {
+            return new Node(value);
+        }
+        if(value<root.data)
+        {
+            root.left=buildTree(root.left,value);
+        }
+        if(value>root.data)
+        {
+            root.right=buildTree(root.right,value);
+        }
+        return root;
+        
+    }
+    static Node findlca(Node root,int r1,int r2)//20 10 30 5 15 25 35
+    {
+        if(root==null)
+        {
+            return null;
+        }
+        if(r1<root.data&&r2<root.data)//5<20 15<20//5<10 15<10--no
+        {
+           return findlca(root.left,r1,r2);//10,5,15
+        }
+        if(r1>root.data&&r2>root.data)//5>10 15>10--no
+        {
+            return findlca(root.right,r1,r2);
+        }
+        return root;//10
+        
+    }
+
+    public static void main(String[] args) 
+    {
+       Scanner sc=new Scanner(System.in);
+        int no=sc.nextInt();
+        Node root=null;
+        for(int i=0;i<no;i++)
+        {
+            int value=sc.nextInt();
+            root=buildTree(root,value);
+        }
+        int r1=sc.nextInt();
+        int r2=sc.nextInt();
+        Node ans=findlca(root,r1,r2);//10
+        System.out.print(ans.data);//10
+    }
+}
