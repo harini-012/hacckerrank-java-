@@ -1,0 +1,93 @@
+import java.io.*;
+import java.util.*;
+class ListNode
+{
+    int data;
+    ListNode next;
+    ListNode(int data)
+    {
+        this.data=data;
+        this.next=null;
+    }
+}
+class TreeNode
+{
+    int val;
+    TreeNode left,right;
+    TreeNode(int val)
+    {
+        this.val=val;
+        this.left=null;
+        this.right=null;
+    }
+}
+public class Solution 
+{
+    static ListNode insertNode(ListNode head,int value)
+    {
+        ListNode newNode=new ListNode(value);
+        if(head==null)
+        {
+            return newNode;
+        }
+        ListNode temp=head;
+        while(temp.next!=null)
+        {
+            temp=temp.next;
+            
+        }
+        temp.next=newNode;
+        return head;
+    }
+    static int[]listToArray(ListNode head,int no)//-10 -3 0 5 9
+
+    {
+        int[]arr=new int[no];//int[]arr=new int[5]
+        int i=0;//0
+        while(head!=null)
+        {
+            
+            arr[i]=head.data;//arr[0]==-10//arr[1]=-3//arr[2]=0//arr[3]=5//arr[4]=9
+            i++;//1//2//3//4//5
+            head=head.next;//-3//0//5//9//null
+        }
+        return arr;
+    }
+    static TreeNode buildTree(int[]arr,int start,int end)//[-10 -3 0 5 9],0,4//[-10 -3 0 5 9],0,1//[-10 -3 0 5 9],0,0//[-10 -3 0 5 9],0,-1
+
+    {
+        if(start>end)//0>-1//5>4
+        {
+            return null;//null//null
+        }
+        int mid=(start+end+1)/2;//5/2=2,2/2=1,//1/2=0//6/2=3//9/2=4
+        TreeNode root=new TreeNode(arr[mid]);//0//-3//-10//5///9
+        root.left=buildTree(arr,start,mid-1);//[-10 -3 0 5 9],0,1//[-10 -3 0 5 9],0,0//[-10 -3 0 5 9],0,-1//null
+        root.right=buildTree(arr,mid+1,end);//[-10 -3 0 5 9],1,4//[-10 -3 0 5 9],4,4//[-10 -3 0 5 9],5,4//null
+        return root;
+    }
+    static void preorder(TreeNode root)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        System.out.print(root.val+" ");
+        preorder(root.left);
+        preorder(root.right);
+    }
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        int no=sc.nextInt();
+        ListNode head=null;
+        for(int i=0;i<no;i++)
+        {
+            int value=sc.nextInt();
+            head=insertNode(head,value);
+        }
+        int[]arr=listToArray(head,no);
+        TreeNode root=buildTree(arr,0,no-1);
+        preorder(root);
+    }
+}
