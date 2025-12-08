@@ -1,0 +1,89 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int data;
+    Node left,right;
+    Node(int data)
+    {
+        this.data=data;
+        this.left=null;
+        this.right=null;
+    }
+}
+public class Solution 
+{
+    static ArrayList<Integer>list=new ArrayList<>();
+    static Node buildTree(int[]arr)
+    {
+        if(arr.length==0)
+        {
+            return null;
+        }
+        int i=1;
+        Node root=new Node(arr[0]);
+        Queue<Node>q=new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()&&i<arr.length)
+        {
+            Node current=q.poll();
+            if(i<arr.length)
+            {
+                current.left=new Node(arr[i]);
+                i++;
+                q.add(current.left);
+            }
+            if(i<arr.length)
+            {
+                current.right=new Node(arr[i]);
+                i++;
+                q.add(current.right);
+            }
+        }
+        return root;
+    }
+    static void inorder(Node root)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        inorder(root.left);
+        list.add(root.data);
+        inorder(root.right);
+        
+    }
+    static boolean isBST(Node root)
+    {
+      
+        inorder(root);
+        for(int i=1;i<list.size();i++)
+        {
+            if(list.get(i)<=list.get(i-1))
+            {
+                return false;
+            }
+        }
+        return true;
+        
+    }
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int no=sc.nextInt();
+        int[]arr=new int[no];
+         for(int i=0;i<no;i++)
+        {
+            arr[i]=sc.nextInt();
+        }
+      Node root= buildTree(arr);
+        if(isBST(root))
+        {
+            System.out.println("The book collection is a valid binary search tree.");
+        }
+        else
+        {
+             System.out.println("The book collection is NOT a valid binary search tree.");
+        }
+    }
+}
