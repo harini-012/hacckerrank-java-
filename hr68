@@ -1,0 +1,71 @@
+import java.io.*;
+import java.util.*;
+class Node
+{
+    int data;
+    Node left,right;
+    Node(int data)
+    {
+        this.data=data;
+        this.left=null;
+        this.right=null;
+    }
+}
+public class Solution 
+{
+   
+    static Node buildTree(Node root,int value)
+    {
+        if(root==null)
+        {
+            return new Node(value);
+        }
+        if(value<root.data)
+        {
+            root.left=buildTree(root.left,value);
+        }
+        else
+        {
+            root.right=buildTree(root.right,value);
+        }
+        return root;
+    }
+    static Integer addSalary(Node root,int start,int end) //50000 40000 60000 30000 45000 55000
+    {
+    int current_sum=0;//0
+     if(root==null)
+     {
+         return 0;
+     }
+   if(start<=root.data&&root.data<=end)//40000<=50000<=60000//60000<=40000<=60000--no//40000<=45000<=60000
+   {
+       current_sum+=root.data;//50000//95000+60000=1500000//55000+150000=205000
+   }
+    if(root.data>=start)//50000>=40000//40000>=40000-no//45000>=40000//60000
+    {
+        current_sum+=addSalary(root.left,start,end);//40000,40000,60000//55000
+    }
+    if(root.data<=end)//500000<=60000//45000<=60000
+    {
+        current_sum+=addSalary(root.right,start,end);//60000,40000,60000//0
+    }
+    return current_sum;
+    }
+   
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int no=sc.nextInt();
+        Node root=null;
+        for(int i=0;i<no;i++)
+        {
+            int value=sc.nextInt();
+            root=buildTree(root,value);
+            
+        }
+        int start=sc.nextInt();
+        int end=sc.nextInt();
+        int ans=addSalary(root,start,end);
+        System.out.println(ans);
+    }
+}
