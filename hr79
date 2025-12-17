@@ -1,0 +1,65 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int q=sc.nextInt();
+        while(q-->0)
+        {
+            int n=sc.nextInt();
+            int m=sc.nextInt();
+             ArrayList<Integer>adj[]=new ArrayList[n+1];
+         for(int i=1;i<=n;i++)
+            {
+                adj[i]=new ArrayList<>();
+            }
+        for(int i=0;i<m;i++)
+            {
+                int value1=sc.nextInt();
+                int value2=sc.nextInt();
+                adj[value1].add(value2);
+                adj[value2].add(value1);
+            }
+
+        
+        int start=sc.nextInt();
+        Queue<Integer>queue=new LinkedList<>();
+        queue.add(start);
+        boolean[]visited=new boolean[n+1];
+        int[]distance=new int[n+1];
+        Arrays.fill(distance,-1);
+        visited[start]=true;
+        distance[start]=0;
+        
+        while(!queue.isEmpty())
+        {
+            int current=queue.poll();
+            for(int c:adj[current])
+            {
+                if(!visited[c])
+                {
+                    visited[c]=true;
+                    distance[c]=distance[current]+6;
+                    queue.add(c);
+                }
+                
+            }
+            
+        }
+        
+        for(int i=1;i<=n;i++)
+        {
+            if(i!=start)
+            {
+                System.out.print(distance[i]+" ");
+            }
+           
+        }
+        System.out.println();
+        }
+        
+    }
+}
