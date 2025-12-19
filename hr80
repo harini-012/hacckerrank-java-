@@ -1,0 +1,67 @@
+/*
+5 5 3
+1 2
+1 3
+2 3
+4 5
+5 1*
+
+1-->2 3 5
+2-->3
+3-->1 2
+4-->5
+5-->4,1
+*/
+import java.io.*;
+import java.util.*;
+
+public class Solution 
+{
+    static void dfs(int i,ArrayList<Integer>[]adj,boolean[]visited)
+    {
+        visited[i]=true;//visited[1]=true//visited[2]=true//visited[3]=true
+        for(int c:adj[i])//2//3
+        {
+            if(!visited[c])
+            {
+                dfs(c,adj,visited);
+            }
+        }
+    }
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();//5
+        int m=sc.nextInt();//5
+        int target=sc.nextInt();//3
+        ArrayList<Integer>[]adj=new ArrayList[n+1];
+        for(int i=1;i<=n;i++)
+        {
+            adj[i]=new ArrayList<>();
+        }
+        for(int i=0;i<m;i++)
+        {
+            int v=sc.nextInt();
+            int u=sc.nextInt();
+            adj[u].add(v);
+            adj[v].add(u);
+            
+        }
+        boolean[]visited=new boolean[n+1];
+        int connected=0;//0
+        for(int i=1;i<=n;i++)
+        {
+            if(!visited[i])//visited[1]
+            {
+                dfs(i,adj,visited);//dfs(1,adj,visited)
+                connected++;//2
+            }
+        }
+        if(connected>target)
+        {
+            System.out.print("-1");
+            return;
+        }
+        System.out.print(m-(n-target));//3
+    }
+}
