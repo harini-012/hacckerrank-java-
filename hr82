@@ -1,0 +1,61 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution 
+{
+    static boolean hasCycle(int current,int parent, ArrayList<ArrayList<Integer>>adj,boolean[]visited)
+    {
+        visited[current]=true;
+        for(int nbr:adj.get(current))
+        {
+            if(!visited[nbr])
+            {
+                if(hasCycle(nbr,current,adj,visited))
+                {
+                    return true;
+                }
+            }
+            else if(nbr!=parent)
+            {
+                return true;
+            }
+                
+        }
+        return false;
+    }
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        int V=sc.nextInt();
+        int e=sc.nextInt();
+        ArrayList<ArrayList<Integer>>adj=new ArrayList<>();
+        for(int i=0;i<V;i++)
+        {
+            adj.add(new ArrayList<>());
+        }
+        for(int i=0;i<e;i++)
+        {
+            int u=sc.nextInt();
+            int v=sc.nextInt();
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        
+
+        }
+        boolean[]visited=new boolean[V];
+        for(int i=0;i<V;i++)
+        {
+            if(!visited[i])
+            {
+                if(hasCycle(i,-1,adj,visited))
+                {
+                    System.out.println("Cycle Detected");  
+                    return;
+                }
+                
+                
+            }
+        }
+        System.out.println("No Cycle Detected"); 
+    }
+}
