@@ -1,0 +1,70 @@
+/*
+5
+101
+Introduction to Algorithms
+201
+Data Structures in Java
+305
+Operating Systems
+207
+Database Management Systems
+107
+Artificial Intelligence
+3
+101
+305
+999*/
+import java.io.*;
+import java.util.*;
+
+public class Solution 
+{
+    static final int t_size=100;
+    static int[]bookids=new int[t_size];
+    static String[]booktitles=new String[t_size];
+    static void insert(int id,String title)//101,Introduction to Algorithms
+    {
+        int index=id%t_size;//1
+        int i=0;//0
+        while(bookids[index]!=0)//bookids[1]=0
+        {
+            i++;
+            index=(id%t_size+i*i)%t_size;
+        }
+        bookids[index]=id;//bookids[1]=101
+        booktitles[index]=title;//booktitles[1]=Introduction to Algorithms
+    }
+    static String search(int id)
+    {
+        int index=id%t_size;
+        int i=0;
+        while(bookids[index]!=0)
+        {
+            if(bookids[index]==id)
+            {
+                return booktitles[index];
+            }
+            i++;
+            index=(id%t_size+i*i)%t_size;
+        }
+        return "Book not found";
+    }
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();//5
+        for(int i=0;i<n;i++)
+        {
+            int id=sc.nextInt();
+            sc.nextLine();
+            String title=sc.nextLine();
+            insert(id,title);
+        }
+        int q=sc.nextInt();
+        for(int i=0;i<q;i++)
+        {
+            int qid=sc.nextInt();
+            System.out.println(search(qid));
+        }
+    }
+}
