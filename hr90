@@ -1,0 +1,38 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int m=sc.nextInt();
+        int[]inventory=new int[n];
+        int[]order=new int[m];
+        for(int i=0;i<n;i++)
+        {
+            int value=sc.nextInt();
+            inventory[i]=value;
+        }
+         for(int i=0;i<m;i++)
+        {
+            int value1=sc.nextInt();
+            order[i]=value1;
+        }
+        HashSet<Integer>set=new HashSet<>();
+        for(int item:inventory)
+        {
+            set.add(item);
+        }
+        for(int item:order)
+        {
+            if(!(set.contains(item)))
+            {
+                System.out.println("No");
+                return;
+            }
+        }
+        System.out.println("Yes");
+    }
+}
