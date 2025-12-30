@@ -1,0 +1,59 @@
+/*ABC
+DEF
+
+ACAB
+XCYX
+*/
+import java.io.*;
+import java.util.*;
+
+public class Solution 
+{
+    public static void main(String[] args) 
+    {
+        
+        Scanner sc=new Scanner(System.in);
+        String s1=sc.next();//ABC
+        String s2=sc.next();//DEF
+        if(s1.length()!=s2.length())
+        {
+            System.out.println("No");
+            return;
+        }
+        HashMap<Character,Character>map1=new HashMap<>();
+        HashMap<Character,Character>map2=new HashMap<>();
+        for(int i=0;i<s1.length();i++)
+        {
+            char c1=s1.charAt(i);//A //B //C  // A C A B
+            char c2=s2.charAt(i);//D //E //F  // X C Y X
+            if(map1.containsKey(c1))//A
+            {
+                if(map1.get(c1)!=c2)//map1.get(A)=X but X !=Y
+                {
+                    System.out.println("No");//No
+                    return;
+                }
+            }
+                else
+                {
+                    map1.put(c1,c2);//A D // B E // C F    // A X //C C
+                }
+            
+             if(map2.containsKey(c2))
+            {
+                if(map2.get(c2)!=c1)
+                {
+                    System.out.println("No");
+                    return;
+                }
+             }
+                else
+                {
+                    map2.put(c2,c1);//D A // E B // F C  // X A // C C
+                }
+            
+        }
+        System.out.println("Yes");//Yes
+
+    }
+}
