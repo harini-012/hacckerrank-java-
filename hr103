@@ -1,0 +1,48 @@
+/*13 
+12 16 22 30 35 39 42 45 48 50 53 55 56 
+35 
+4 */
+import java.io.*;
+import java.util.*;
+
+public class Solution 
+{
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();//13
+        int[]arr=new int[n];//12 16 22 30 35 39 42 45 48 50 53 55 56 
+        for(int i=0;i<n;i++)
+        {
+            int value=sc.nextInt();
+            arr[i]=value;
+        }
+        int target=sc.nextInt();//35
+        int closest=sc.nextInt();//4
+        
+        PriorityQueue<int[]>pq=new PriorityQueue<>(
+        (a,b)->a[0]-b[0]);
+        //priority queue will store the minimum order only
+        //(4,39) (5,30) (7,42) (10,45) (13,22) (13,48) (15,50) (18,53) (19,16) (20,55) (21,56) (23,12)
+        for(int i=0;i<n;i++)//12 16 22 30 35 39 42 45 48 50 53 55 56
+        {
+            if(arr[i]==target)//35==35
+            {
+                continue;//continue
+            }
+            int dist=Math.abs(arr[i]-target);//12-35=23//16-35=19//22-35=13//30-35=5//39,35//42-35=7//45-35=10//48-35//50-35=15//53-35//55-35=20//56-35
+            pq.add(new int[]{dist,arr[i]});//(23,12)//(19,16)//(13,22)//(5,30)//(4,39)//(7,42)//(10,45)//(13,48)//(15,50)//(18,53)//(20,55)//(21,56)
+        }
+        List<Integer>result=new ArrayList<>();
+        for(int i=0;i<closest;i++)//0<4//1<4//2<4//3<4
+        {
+            result.add(pq.poll()[1]);//39//30//42//45
+        }
+        Collections.sort(result);//30 39 42 45
+        for(int val:result)
+        {
+            System.out.print(val+" ");//30 39 42 45
+        }
+        }
+    }
+    
