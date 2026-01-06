@@ -1,0 +1,43 @@
+/*
+3
+2 4
+-1 -1
+0 0
+1
+*/
+    
+import java.io.*;
+import java.util.*;
+
+public class Solution 
+{
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+      
+        
+        
+        
+        PriorityQueue<int[]>pq=new PriorityQueue<>(
+        (a,b)->a[0]-b[0]);
+        //pq always in min heap
+        //(0,0,0) //(2,-1,-1) //(20,2,4)
+       for(int i=0;i<n;i++)
+        {
+            int value1=sc.nextInt();//2//-1//0
+            int value2=sc.nextInt();//4//-1//0
+          
+            int dist=value1*value1+value2*value2;//4+16=20//1+1=2//0+0=0
+            pq.add(new int[]{dist,value1,value2});//(20,2,4)//(2,-1,-1)//(0,0,0)
+        }
+        int closest=sc.nextInt();//1
+       
+        for(int i=0;i<closest;i++)//0<1
+        {
+            int[]point=pq.poll();//0 0 0 
+             System.out.println(point[1]+" " +point[2]);//0 0
+        }
+       
+        }
+    }
