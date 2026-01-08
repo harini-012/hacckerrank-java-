@@ -1,0 +1,34 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution 
+{
+
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        PriorityQueue<Integer>pq=new PriorityQueue<>();
+        int n=sc.nextInt();
+        for(int i=0;i<n;i++)
+        {
+            int value=sc.nextInt();
+            pq.add(value);
+        }
+        int size=pq.size();
+        List<Integer>result=new ArrayList<>();
+        for(int i=0;i<size-1;i++)
+        {
+            int a=pq.poll();
+            int b=pq.poll();
+            int total=a+b;
+            result.add(total);
+            pq.add(total);
+        }
+        int total=0;
+        for(int i=0;i<result.size();i++)
+        {
+            total+=result.get(i);
+        }
+        System.out.println(total);
+    }
+}
